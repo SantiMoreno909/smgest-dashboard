@@ -12,7 +12,18 @@ const useProduct = () => {
     async function fetchData() {
       try {
         const result = await getProducts();
-        setProducts(result);
+        const totalCount = result.productos.length;
+        const countByCategory = result.productos.reduce((acc, product) => {
+          acc[product.categoryId] = acc[product.categoryId]
+            ? acc[product.categoryId] + 1
+            : 1;
+          return acc;
+        }, {});
+        setProducts({
+          count: totalCount,
+          countByCategory: countByCategory,
+          productos: result.productos,
+        });
       } catch (error) {
         console.error("Error al obtener los productos:", error);
       }

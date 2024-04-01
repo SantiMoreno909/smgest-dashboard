@@ -15,9 +15,9 @@ const Productos = () => {
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
             <th scope="col">Presentación</th>
-            <th scope="col">ID Categoría</th>
-            <th scope="col">ID Subcategoría</th>
-            <th scope="col">ID Proveedor</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Subcategoría</th>
+            <th scope="col">Proveedor</th>
           </tr>
         </thead>
         <tbody>
@@ -27,9 +27,9 @@ const Productos = () => {
               <th scope="row">{producto.id}</th>
               <td>{producto.name}</td>
               <td>{producto.description}</td>
-              <td>{producto.categoryId}</td>
-              <td>{producto.subcategoryId}</td>
-              <td>{producto.providerId}</td>
+              <td>{producto.category}</td>
+              <td>{producto.subcategory}</td>
+              <td>{producto.provider}</td>
             </tr>
           ))}
         </tbody>

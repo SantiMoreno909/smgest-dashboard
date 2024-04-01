@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Tarjetero from "./components/Tarjetero";
 import Sidebar from "./components/Sidebar";
 import Inicio from "./pages/Inicio";
 import Productos from "./pages/Productos";
