@@ -6,6 +6,7 @@ import { useUsers } from "../hooks/useUsers";
 const Inicio = () => {
   const { count } = useProduct();
   const { totalUsers } = useUsers();
+  const { categoryCount } = useProduct();
 
   const datos1 = [
     {
@@ -18,6 +19,12 @@ const Inicio = () => {
       color: "primary",
       titulo: "Total de usuarios",
       valor: totalUsers,
+      icono: "",
+    },
+    {
+      color: "warning",
+      titulo: "Total de categorias",
+      valor: categoryCount,
       icono: "",
     },
   ];
