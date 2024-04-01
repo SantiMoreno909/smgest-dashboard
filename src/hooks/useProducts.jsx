@@ -1,28 +1,43 @@
 import { useState, useEffect } from "react";
 import { getProducts } from "../service/product.service";
 
+// Función para obtener la cantidad de categorías únicas y las categorías
 const obtenerCategoryCount = (productos) => {
-  // Array para almacenar las categorías únicas
   let categorias = [];
-  // Contador para contar las categorías únicas no encontradas
-  let contadorCategoriasNoEncontradas = 0;
 
-  // Recorrer todos los productos
   productos.forEach((producto) => {
     const { category } = producto;
 
-    // Verificar si la categoría ya está en el array de categorías
     if (!categorias.includes(category)) {
-      // Si no se encuentra, incrementar el contador y agregar la categoría al array
-      contadorCategoriasNoEncontradas++;
       categorias.push(category);
     }
   });
 
-  // Asignar la longitud del array de categorías al categoryCount
   const categoryCount = categorias.length;
 
-  return categoryCount;
+  return {
+    categoryCount: categoryCount,
+    categorias: categorias,
+  };
+};
+
+// Función para agrupar productos por categoría
+const agruparProductosPorCategoria = (categorias, productos) => {
+  let productosPorCategoria = {};
+
+  categorias.forEach((categoria) => {
+    productosPorCategoria[categoria] = [];
+  });
+
+  productos.forEach((producto) => {
+    const { category } = producto;
+
+    if (productosPorCategoria.hasOwnProperty(category)) {
+      productosPorCategoria[category].push(producto);
+    }
+  });
+
+  return productosPorCategoria;
 };
 
 const useProduct = () => {
@@ -40,6 +55,17 @@ const useProduct = () => {
         const result = await getProducts();
         const totalCount = result.productos.length;
 
+        // Obtener la cantidad de categorías únicas y las categorías
+        const { categoryCount, categorias } = obtenerCategoryCount(
+          result.productos
+        );
+
+        // Agrupar productos por categoría
+        const productsByCategory = agruparProductosPorCategoria(
+          categorias,
+          result.productos
+        );
+
         // Contar la cantidad de productos por categoría
         const countByCategory = result.productos.reduce((acc, product) => {
           acc[product.categoryId] = acc[product.categoryId]
@@ -47,19 +73,6 @@ const useProduct = () => {
             : 1;
           return acc;
         }, {});
-
-        // Agrupar productos por categoría
-        const productsByCategory = result.productos.reduce((acc, product) => {
-          const { categoryId } = product;
-          if (!acc[categoryId]) {
-            acc[categoryId] = [];
-          }
-          acc[categoryId].push(product);
-          return acc;
-        }, {});
-
-        // Obtener la cantidad de categorías únicas
-        const categoryCount = obtenerCategoryCount(result.productos);
 
         setProducts({
           count: totalCount,

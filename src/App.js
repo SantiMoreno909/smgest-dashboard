@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Tarjetero from "./components/Tarjetero";
 import Sidebar from "./components/Sidebar";
 import Inicio from "./pages/Inicio";
 import Productos from "./pages/Productos";
+import DetalleProductos from "./pages/DetalleProductos";
 import Categorias from "./pages/Categorias";
 import Usuarios from "./pages/Usuarios";
 import "./App.css";
@@ -19,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Inicio />} />
             <Route path="/productos" element={<Productos />} />
+            <Route path="/productos/:id" element={<DetalleProductos />} />
             <Route path="/categorias" element={<Categorias />} />
             <Route path="/usuarios" element={<Usuarios />} />
           </Routes>
